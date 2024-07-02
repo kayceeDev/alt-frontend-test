@@ -7,22 +7,27 @@ const HomePage = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
+   // Access the environment variables
+   const apiUrl = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
       navigate("/login");
       return;
     }
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/api/users");
-        setUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
+  
     fetchUsers();
   }, [navigate]);
+
+  async function fetchUsers() {
+    try {
+      const response = await axios.get(`${apiUrl}/api/users`);
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center p-4">

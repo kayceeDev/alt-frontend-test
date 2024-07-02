@@ -10,6 +10,9 @@ const Signup = () => {
   });
   const navigate = useNavigate();
 
+   // Access the environment variables
+   const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -25,7 +28,7 @@ const Signup = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:3000/api/users", formData);
+      await axios.post(`${apiUrl}/api/users`, formData);
       alert("Registered successfully");
       setFormData({
         name: "",
